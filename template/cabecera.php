@@ -36,15 +36,16 @@
                 <a class="nav-link" href="#">Sitio Web</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Libros</a>
+                <a class="nav-link" href="productos.php">Libros</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Nosotros</a>
+                <a class="nav-link" href="nosotros.php">Nosotros</a>
             </li>
         </ul>
     </nav>
     <div class="container">
+        <br>
         <div class="row">
