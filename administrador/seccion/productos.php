@@ -1,28 +1,11 @@
-<?php include("../template/cabecera.php")?>
+<?php include("../template/cabecera.php");?>
 <?php 
     $txtID=(isset($_POST['txtID']))?$_POST['txtID']:"";
     $txtNombre=(isset($_POST['txtNombre']))?$_POST['txtNombre']:"";
     $txtImagen=(isset($_FILES['txtImagen']['name']))?$_FILES['txtImagen']['name']:"";
     $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
-    echo $txtID."<br/>";
-    echo $txtNombre."<br/>";
-    echo $txtImagen."<br/>";
-    echo $accion."<br/>";
-
-    $host="localhost";
-    $bd="sitio";
-    $usurio="root";
-    $contrasenia="";
-
-    //Conexion a base de datos
-    try {
-        $conexion= new PDO("mysql:host=$host;dbname=$bd",$usurio,$contrasenia);
-        if ($conexion){ echo "Conectado ... a sistema";}
-    } catch ( Exception $ex) {
-        echo $ex->getMessage();
-    }
-
+    include("../config/bd.php");
 
     switch($accion){
 
@@ -30,6 +13,8 @@
 
         case"Agregar":
            // INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'Libro de Php', 'imagen.jpg');
+           $sentenciaSQL= $conexion->prepare("INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'Libro de Php', 'imagen.jpg');");
+           $sentenciaSQL-> execute();
             echo"Presionado botón agregar";
             break;
         case"Modificar":
