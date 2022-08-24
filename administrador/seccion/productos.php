@@ -7,15 +7,13 @@
 
     include("../config/bd.php");
 
-    switch($accion){
-
-        
-
+    switch($accion){     
         case"Agregar":
            // INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'Libro de Php', 'imagen.jpg');
-           $sentenciaSQL= $conexion->prepare("INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'Libro de Php', 'imagen.jpg');");
+           $sentenciaSQL= $conexion->prepare("INSERT INTO libros (nombre, imagen) VALUES (:nombre,:imagen);");        
+           $sentenciaSQL->bindParam(':nombre',$txtNombre);
+           $sentenciaSQL->bindParam(':imagen',$txtImagen);
            $sentenciaSQL-> execute();
-            echo"Presionado botón agregar";
             break;
         case"Modificar":
             echo"Presionado botón Modificar";
@@ -24,6 +22,12 @@
             echo"Presionado botón Cancelar";
             break;
     }
+
+    $sentenciaSQL = $conexion->prepare("SELECT * FROM libros"); 
+    $sentenciaSQL-> execute();
+    $listaLibros = $sentenciaSQL->fetchAll(PDO::FETCH_ASSOC);
+
+
 ?>
 
 <div class="col-md-5">
@@ -72,12 +76,14 @@
             </tr>
         </thead>
         <tbody>
+        <?php foreach($listaLibros as $libro) { ?> <!-- Lee la lista como libro -->
             <tr>
-                <td>2</td>
-                <td>Aprende PHP</td>
-                <td>imgen.jpg</td>
+                <td><?php echo $libro['id'];?></td>
+                <td><?php echo $libro['nombre'];?></td>
+                <td><?php echo $libro['imagen'];?></td>
                 <td>Seleccionar | Borrar</td>
             </tr>
+            <?php }?>
         </tbody>
     </table>
 </div>
