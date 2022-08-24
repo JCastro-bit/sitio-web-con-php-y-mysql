@@ -46,6 +46,13 @@
             <a class="nav-item nav-link" href="<?php echo $url;?>/administrador/seccion/cerrar.php">Cerrar sesión</a>
             <a class="nav-item nav-link" href="<?php echo $url;?>">Ver sitio web</a>
         </div>
+        <div>
+                <?php
+                    // Obteniendo la fecha actual del sistema con PHP
+                    $fechaActual = date('d-m-Y');   
+                    echo $fechaActual;
+                ?>
+        </div>
     </nav>
     <div class="container">
         <br>

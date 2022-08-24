@@ -12,11 +12,24 @@
            // INSERT INTO `libros` (`id`, `nombre`, `imagen`) VALUES (NULL, 'Libro de Php', 'imagen.jpg');
            $sentenciaSQL= $conexion->prepare("INSERT INTO libros (nombre, imagen) VALUES (:nombre,:imagen);");        
            $sentenciaSQL->bindParam(':nombre',$txtNombre);
-           $sentenciaSQL->bindParam(':imagen',$txtImagen);
+
+           $fecha = new DateTime();
+           $nombreArchivo=($txtImagen!="")?$fecha->getTimestamp()."_".$_FILES["txtImagen"]["name"]:"imagen.jpg";
+
+           $tmpImagen=$_FILES["txtImagen"]["tmp_name"];
+
+           if( $tmpImagen!=""){
+                move_uploaded_file($tmpImagen,"../../img/uploads".$nombreArchivo);
+           }
+
+           $sentenciaSQL->bindParam(':imagen',$nombreArchivo);
            $sentenciaSQL-> execute();
             break;
         case"Modificar":
-            echo"Presionado botón Modificar";
+            $sentenciaSQL = $conexion->prepare("UPDATE libros SET nombre=:nombre WHERE id=:id"); 
+            $sentenciaSQL->bindParam(':nombre',$txtNombre); 
+            $sentenciaSQL->bindParam(':id',$txtID); 
+            $sentenciaSQL-> execute();
             break;
         case"Cancelar":
             echo"Presionado botón Cancelar";
@@ -56,12 +69,13 @@
             <form method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="txtID">ID</label>
-                    <input type="text" class="form-control" value="<?php echo $txtID; ?>" name="txtID" id="txtID" placeholder="ID">
+                    <input type="text" class="form-control" value="<?php echo $txtID; ?>" name="txtID" id="txtID"
+                        placeholder="ID">
                 </div>
                 <div class="form-group">
                     <label for="txtNombre">Nombre</label>
-                    <input type="text" class="form-control" value="<?php echo $txtNombre; ?>" name="txtNombre" id="txtNombre"
-                        placeholder="Escriba el Nombre">
+                    <input type="text" class="form-control" value="<?php echo $txtNombre; ?>" name="txtNombre"
+                        id="txtNombre" placeholder="Escriba el Nombre">
                 </div>
                 <div class="form-group">
                     <label for="txtNombre">Imagen</label>
