@@ -19,7 +19,7 @@
            $tmpImagen=$_FILES["txtImagen"]["tmp_name"];
 
            if( $tmpImagen!=""){
-                move_uploaded_file($tmpImagen,"../../img/uploads".$nombreArchivo);
+                move_uploaded_file($tmpImagen,"../../img/uploads/".$nombreArchivo);
            }
 
            $sentenciaSQL->bindParam(':imagen',$nombreArchivo);
@@ -30,6 +30,14 @@
             $sentenciaSQL->bindParam(':nombre',$txtNombre); 
             $sentenciaSQL->bindParam(':id',$txtID); 
             $sentenciaSQL-> execute();
+            
+            if ($txtImagen!="") {
+                $sentenciaSQL = $conexion->prepare("UPDATE libros SET imagen=:imagen WHERE id=:id"); 
+                $sentenciaSQL->bindParam(':imagen',$txtImagen); 
+                $sentenciaSQL->bindParam(':id',$txtID); 
+                $sentenciaSQL-> execute();
+            }
+            
             break;
         case"Cancelar":
             echo"Presionado botón Cancelar";
