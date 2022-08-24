@@ -37,7 +37,7 @@
                 $sentenciaSQL->bindParam(':id',$txtID); 
                 $sentenciaSQL-> execute();
             }
-            
+
             break;
         case"Cancelar":
             echo"Presionado botón Cancelar";
@@ -53,10 +53,19 @@
             //echo"Presionado botón Seleccionar";
             break;
         case"Borrar":
-            $sentenciaSQL = $conexion->prepare("DELETE FROM libros WHERE id=:id ");
-            $sentenciaSQL->bindParam(':id',$txtID); 
-            $sentenciaSQL-> execute();
-            //echo"Presionado botón Borrar";
+            $sentenciaSQL=$conexion->prepare("SELECT imagen FROM libros WHERE id=:id");
+            $sentenciaSQL->bindParam(':id',$txtID);
+            $sentenciaSQL->execute();
+            $libro=$sentenciaSQL->fetch(PDO :: FETCH_LAZY);
+            if(isset($libro["imagen"]) && ($libro["imagen"]!="imagen.jpg")){
+                if (file_exists("../../img/uploads/".$libro["imagen"])) {
+                    unlink("../../img/uploads/".$libro["imagen"]);
+                }
+            }
+
+            $sentenciaSQL=$conexion->prepare("DELETE FROM libros WHERE id=:id");
+            $sentenciaSQL->bindParam(':id',$txtID);
+            $sentenciaSQL->execute();
             break;
     }
 
