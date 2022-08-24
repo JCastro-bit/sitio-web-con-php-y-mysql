@@ -21,6 +21,22 @@
         case"Cancelar":
             echo"Presionado botón Cancelar";
             break;
+        case"Seleccionar":
+            $sentenciaSQL = $conexion->prepare("SELECT * FROM libros WHERE id=:id"); 
+            $sentenciaSQL->bindParam(':id',$txtID); 
+            $sentenciaSQL-> execute();
+            $libro = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
+
+            $txtNombre = $libro['nombre'];
+            $txtImagen = $libro['imagen'];
+            //echo"Presionado botón Seleccionar";
+            break;
+        case"Borrar":
+            $sentenciaSQL = $conexion->prepare("DELETE FROM libros WHERE id=:id ");
+            $sentenciaSQL->bindParam(':id',$txtID); 
+            $sentenciaSQL-> execute();
+            //echo"Presionado botón Borrar";
+            break;
     }
 
     $sentenciaSQL = $conexion->prepare("SELECT * FROM libros"); 
@@ -39,16 +55,17 @@
         <div class="card-body">
             <form method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">ID</label>
-                    <input type="text" class="form-control" name="txtID" id="txtID" placeholder="ID">
+                    <label for="txtID">ID</label>
+                    <input type="text" class="form-control" value="<?php echo $txtID; ?>" name="txtID" id="txtID" placeholder="ID">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Nombre</label>
-                    <input type="text" class="form-control" name="txtNombre" id="txtNombre"
+                    <label for="txtNombre">Nombre</label>
+                    <input type="text" class="form-control" value="<?php echo $txtNombre; ?>" name="txtNombre" id="txtNombre"
                         placeholder="Escriba el Nombre">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Imagen</label>
+                    <label for="txtNombre">Imagen</label>
+                    <?php echo $txtImagen; ?>
                     <input type="file" class="form-control" name="txtImagen" id="txtImagen" placeholder="Subir imagen">
                 </div>
                 <div class="btn-group" role="group" aria-label=" ">
@@ -76,14 +93,23 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach($listaLibros as $libro) { ?> <!-- Lee la lista como libro -->
+            <?php foreach($listaLibros as $libro) { ?>
+            <!-- Lee la lista como libro -->
             <tr>
                 <td><?php echo $libro['id'];?></td>
                 <td><?php echo $libro['nombre'];?></td>
                 <td><?php echo $libro['imagen'];?></td>
-                <td>Seleccionar | Borrar</td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="txtID" id="txtID" value="<?php echo $libro['id'];?>" />
+
+                        <input type="submit" name="accion" value="Seleccionar" class="btn btn-primary" />
+
+                        <input type="submit" name="accion" value="Borrar" class="btn btn-danger" />
+                    </form>
+                </td>
             </tr>
-            <?php }?>
+            <?php } ?>
         </tbody>
     </table>
 </div>
