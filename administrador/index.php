@@ -1,6 +1,16 @@
 <?php
+
+    session_start();    
+
     if($_POST){
-        header('Location:inicio.php');   
+        if(($_POST['usuario']=="javiercastro")&&($_POST['contrasenia']=="sistema")) {
+            $_SESSION['usuario']=="ok";
+            $_SESSION['nombreUsuario']=="JavierCastro";
+            header('Location:inicio.php');  
+        }else{
+             $mensaje="Error: El usuario o contrasena son incorrectos";
+        }
+         
     }
 ?>
 
@@ -36,6 +46,7 @@
     <!-- favicon -->
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://localhost/sitio-web-con-php-y-mysql/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -54,16 +65,21 @@
                         Login 🔒
                     </div>
                     <div class="card-body">
+                <?php if(isset($mensaje)) {?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $mensaje; ?>
+                    </div>
+                <?php }?>
                         <form method="POST">
                             <div class="form-group">
-                                <label>Usurario</label>
-                                <input type="text" class="form-control" name="usurario"
-                                    placeholder="Introduzca el usurario">
+                                <label>Usuario</label>
+                                <input require type="text" class="form-control" name="usuario"
+                                    placeholder="Introduzca el usuario">
 
                             </div>
                             <div class="form-group">
                                 <label>Contraseña</label>
-                                <input type="password" class="form-control" name="c ontraseña" placeholder="Contraseña">
+                                <input require type="password" class="form-control" name="contrasenia" placeholder="Contraseña">
                             </div>
                             <button type="submit" class="btn btn-primary">Entrar al administrador</button>
                         </form>

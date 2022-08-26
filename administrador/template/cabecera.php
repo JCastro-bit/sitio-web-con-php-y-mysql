@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 
@@ -19,21 +20,18 @@
 <body>    
     <?php $url="http://".$_SERVER['HTTP_HOST']."/sitio-web-con-php-y-mysql"?>
 
-    <nav class="navbar navbar-expand navbar-light bg-light">
+    <nav class="navbar navbar-expand navbar-dark bg-primary">
         <div class="nav navbar-nav">
-            <a class="nav-item nav-link active" href="#">Administrador del sitio web <span
+            <a class="navbar-brand" href="#">Administrador del sitio web <span
                     class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="<?php echo $url;?>/administrador/inicio.php">Inicio</a>
             <a class="nav-item nav-link" href="<?php echo $url;?>/administrador/seccion/productos.php">Libros</a>
             <a class="nav-item nav-link" href="<?php echo $url;?>/administrador/seccion/cerrar.php">Cerrar sesión</a>
             <a class="nav-item nav-link" href="<?php echo $url;?>">Ver sitio web</a>
+            <a class="nav-item nav-link"><?php echo (date('d-m-Y'));?></a>
         </div>
         <div>
-            <?php
-                    // Obteniendo la fecha actual del sistema con PHP
-                    $fechaActual = date('d-m-Y');   
-                    echo $fechaActual;
-                ?>
+            
         </div>
     </nav>
     <div class="container">

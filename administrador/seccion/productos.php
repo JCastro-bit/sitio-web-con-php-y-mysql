@@ -143,8 +143,8 @@
 
 </div>
 <div class="col-md-7">
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
